@@ -1,0 +1,182 @@
+{
+  "stats": {
+    "suites": 1,
+    "tests": 5,
+    "passes": 5,
+    "pending": 0,
+    "failures": 0,
+    "start": "2022-10-07T06:41:48.402Z",
+    "end": "2022-10-07T06:42:14.082Z",
+    "duration": 25680,
+    "testsRegistered": 5,
+    "passPercent": 100,
+    "pendingPercent": 0,
+    "other": 0,
+    "hasOther": false,
+    "skipped": 0,
+    "hasSkipped": false
+  },
+  "results": [
+    {
+      "uuid": "4d819ed7-f6a5-44b7-ba49-05d621a0f5ef",
+      "title": "",
+      "fullFile": "cypress\\e2e\\firstTest.spec.js",
+      "file": "cypress\\e2e\\firstTest.spec.js",
+      "beforeHooks": [],
+      "afterHooks": [],
+      "tests": [],
+      "suites": [
+        {
+          "uuid": "5fa4b84d-e1b0-41fb-9afb-1e44487ba5ca",
+          "title": "Test with backend",
+          "fullFile": "",
+          "file": "",
+          "beforeHooks": [],
+          "afterHooks": [],
+          "tests": [
+            {
+              "title": "verify correct request and response - Create New Article",
+              "fullTitle": "Test with backend verify correct request and response - Create New Article",
+              "timedOut": null,
+              "duration": 6662,
+              "state": "passed",
+              "speed": "medium",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "cy.intercept('POST', 'https://api.realworld.io/api/articles/').as('postArticle');\ncy.contains('New Article').click();\ncy.get('[formcontrolname=\"title\"]').type('First article !@#$');\ncy.get('[formcontrolname=\"description\"]').type('First article description');\ncy.get('[formcontrolname=\"body\"]').type('First article body');\ncy.contains('Publish Article').click();\ncy.wait('@postArticle');\ncy.get('@postArticle').then(xhr => {\n  expect(xhr.response.statusCode).to.equal(200);\n  expect(xhr.request.body.article.body).to.equal('First article body');\n  expect(xhr.response.body.article.description).to.equal('First article description');\n});",
+              "err": {},
+              "uuid": "02326519-bddb-46d6-bc49-ba6658b0b49d",
+              "parentUUID": "5fa4b84d-e1b0-41fb-9afb-1e44487ba5ca",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "intercept and modify request and response - Create New Article",
+              "fullTitle": "Test with backend intercept and modify request and response - Create New Article",
+              "timedOut": null,
+              "duration": 6053,
+              "state": "passed",
+              "speed": "medium",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "// // way of modify request\ncy.intercept('POST', 'https://api.realworld.io/api/articles/', req => {\n  req.body.article.description = \"First article description modify\";\n}).as('postArticle'); // way of modify response\n// cy.intercept('POST', 'https://api.realworld.io/api/articles/', req => {\n//     req.reply(res => {\n//          expect(res.body.article.description).to.equal('First article description modify');\n//         res.body.article.description = \"First article description\"\n//     })\n// }).as('postArticle');\ncy.contains('New Article').click();\ncy.get('[formcontrolname=\"title\"]').type('First article !@#$%^');\ncy.get('[formcontrolname=\"description\"]').type('First article description');\ncy.get('[formcontrolname=\"body\"]').type('First article body');\ncy.contains('Publish Article').click();\ncy.wait('@postArticle');\ncy.get('@postArticle').then(xhr => {\n  expect(xhr.response.statusCode).to.equal(200);\n  expect(xhr.request.body.article.body).to.equal('First article body');\n  expect(xhr.response.body.article.description).to.equal('First article description modify');\n});",
+              "err": {},
+              "uuid": "5a62778c-f1b1-4e61-b2f5-18ad45628655",
+              "parentUUID": "5fa4b84d-e1b0-41fb-9afb-1e44487ba5ca",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "verify popular tags are displayed",
+              "fullTitle": "Test with backend verify popular tags are displayed",
+              "timedOut": null,
+              "duration": 2051,
+              "state": "passed",
+              "speed": "fast",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "cy.get('.tag-list').should('contain', 'testing').and('contain', 'javascript').and('contain', 'typescript');",
+              "err": {},
+              "uuid": "0eb8900f-0c0c-4508-bc9d-951907f447f6",
+              "parentUUID": "5fa4b84d-e1b0-41fb-9afb-1e44487ba5ca",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "verify golbal feed",
+              "fullTitle": "Test with backend verify golbal feed",
+              "timedOut": null,
+              "duration": 3581,
+              "state": "passed",
+              "speed": "fast",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "cy.intercept('GET', 'https://api.realworld.io/api/articles/feed*', {\n  'articles': [],\n  'articlesCount': 0\n});\ncy.intercept('GET', 'https://api.realworld.io/api/articles*', {\n  fixture: 'articles.json'\n});\ncy.contains('Global Feed').click();\ncy.get('app-article-list button').then(heartList => {\n  expect(heartList[0]).to.contain(0);\n  expect(heartList[1]).to.contain(5);\n}); // way of update fixtures file with in test\ncy.fixture('articles.json').then(file => {\n  const articleLink = file.articles[0].slug;\n  file.articles[0].favoritesCount = 1;\n  cy.intercept('POST', `https://api.realworld.io/api/articles/${articleLink}/favorite`, file);\n});\ncy.get('app-article-list button').eq(0).click().should('contain', '1');",
+              "err": {},
+              "uuid": "e9d33cf3-b073-43b2-a7af-f01126327e8e",
+              "parentUUID": "5fa4b84d-e1b0-41fb-9afb-1e44487ba5ca",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "delete article in a global feed",
+              "fullTitle": "Test with backend delete article in a global feed",
+              "timedOut": null,
+              "duration": 7108,
+              "state": "passed",
+              "speed": "medium",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "const userCredentials = {\n  user: {\n    email: \"artem.bondar16@gmail.com\",\n    password: \"CypressTest1\"\n  }\n};\nconst bodyRequest = {\n  article: {\n    tagList: [],\n    title: \"@Sample Title\",\n    description: \"sample description\",\n    body: \"sample body\"\n  }\n}; // ****  used the token request within the test ****\n// cy.request('POST', 'https://api.realworld.io/api/users/login', userCredentials)\n// .its('body').then(body => {\n//     const token = body.user.token;\n//     cy.request({\n//             url: 'https://api.realworld.io/api/articles/',\n//             headers: {'authorization': 'Token '+token},\n//             method: 'POST',\n//             body: bodyRequest\n//         }).then(res => {\n//             expect(res.status).to.equal(200)\n//         });\n//         cy.contains('Global Feed').click();\n//         cy.get('.article-preview').first().click();\n//         cy.get('.article-actions').contains('Delete Article').click()\n//         cy.wait(500);\n//         cy.request({\n//             url: 'https://api.realworld.io/api/articles/?limit=10&offset=0',\n//             headers: {'authorization': 'Token '+token},\n//             method: 'GET',\n//         }).its('body').then(body => {\n//             expect(body.articles[0].title).not.to.equal('@Sample Title');\n//         });\n//     });\n// ****  used the token saved in the localStorage ****\ncy.get('@token').then(token => {\n  cy.request({\n    url: 'https://api.realworld.io/api/articles/',\n    headers: {\n      'authorization': 'Token ' + token\n    },\n    method: 'POST',\n    body: bodyRequest\n  }).then(res => {\n    expect(res.status).to.equal(200);\n  });\n  cy.contains('Global Feed').click();\n  cy.get('.article-preview').first().click();\n  cy.get('.article-actions').contains('Delete Article').click();\n  cy.wait(500);\n  cy.request({\n    url: 'https://api.realworld.io/api/articles/?limit=10&offset=0',\n    headers: {\n      'authorization': 'Token ' + token\n    },\n    method: 'GET'\n  }).its('body').then(body => {\n    expect(body.articles[0].title).not.to.equal('@Sample Title');\n  });\n});",
+              "err": {},
+              "uuid": "c9fa929b-a255-4c10-b169-48aee65008fb",
+              "parentUUID": "5fa4b84d-e1b0-41fb-9afb-1e44487ba5ca",
+              "isHook": false,
+              "skipped": false
+            }
+          ],
+          "suites": [],
+          "passes": [
+            "02326519-bddb-46d6-bc49-ba6658b0b49d",
+            "5a62778c-f1b1-4e61-b2f5-18ad45628655",
+            "0eb8900f-0c0c-4508-bc9d-951907f447f6",
+            "e9d33cf3-b073-43b2-a7af-f01126327e8e",
+            "c9fa929b-a255-4c10-b169-48aee65008fb"
+          ],
+          "failures": [],
+          "pending": [],
+          "skipped": [],
+          "duration": 25455,
+          "root": false,
+          "rootEmpty": false,
+          "_timeout": 2000
+        }
+      ],
+      "passes": [],
+      "failures": [],
+      "pending": [],
+      "skipped": [],
+      "duration": 0,
+      "root": true,
+      "rootEmpty": true,
+      "_timeout": 2000
+    }
+  ],
+  "meta": {
+    "mocha": {
+      "version": "7.0.1"
+    },
+    "mochawesome": {
+      "options": {
+        "quiet": false,
+        "reportFilename": "mochawesome",
+        "saveHtml": false,
+        "saveJson": true,
+        "consoleReporter": "spec",
+        "useInlineDiffs": false,
+        "code": true
+      },
+      "version": "7.1.3"
+    },
+    "marge": {
+      "options": {
+        "id": "default",
+        "reportDir": "cypress/results/mochawesome",
+        "overwrite": false,
+        "html": false,
+        "json": true
+      },
+      "version": "6.2.0"
+    }
+  }
+}

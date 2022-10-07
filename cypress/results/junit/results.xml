@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<testsuites>
+<testsuite name="Root Suite" timestamp="2022-10-04T02:28:09" tests="0" file="cypress\e2e\secondTest.spec.js" time="0.000" failures="0"></testsuite>
+<testsuite name="Test log out" timestamp="2022-10-04T02:28:09" tests="1" time="2.850" failures="0">
+  
+  <testcase name="Test log out verify use can log out successfully" time="2.818" classname="verify use can log out successfully"></testcase>
+  
+</testsuite>
+
+<testsuite name="Root Suite" timestamp="2022-10-04T02:27:58" tests="0" file="cypress\e2e\firstTest.spec.js" time="0.000" failures="0"></testsuite>
+<testsuite name="Test with backend" timestamp="2022-10-04T02:27:58" tests="1" time="8.633" failures="0">
+  
+  <testcase name="Test with backend delete article in a global feed" time="8.545" classname="delete article in a global feed"></testcase>
+  
+</testsuite>
+
+</testsuites>

@@ -1,0 +1,40 @@
+{
+    "articles":[
+        {
+            "slug":"First-article-!@dollar-1850",
+            "title":"First article !@#$",
+            "description":"First article description",
+            "body":"First article body",
+            "tagList":[],
+            "createdAt":"2022-10-03T13:40:25.891Z",
+            "updatedAt":"2022-10-03T13:40:25.891Z",
+            "favorited":false,
+            "favoritesCount":0,
+            "author": {
+                    "username":"CY Tester",
+                    "bio":"knsdsadsdsadas",
+                    "image":"knsdsadsdsadas",
+                    "following":false
+                }
+        },
+        {
+            "slug":"Second-article-!@dollar-1851",
+            "title":"Second article !@#$%",
+            "description":"Second article description",
+            "body":"Second article body",
+            "tagList":[],
+            "createdAt":"2022-10-03T13:40:25.891Z",
+            "updatedAt":"2022-10-03T13:40:25.891Z",
+            "favorited":false,
+            "favoritesCount":5,
+            "author":
+                {
+                    "username":"CY Tester",
+                    "bio":"knsdsadsdsadas",
+                    "image":"knsdsadsdsadas",
+                    "following":false
+                }
+            }
+        ],
+    "articlesCount": 2
+}
